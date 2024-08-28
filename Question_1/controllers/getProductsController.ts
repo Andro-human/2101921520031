@@ -47,6 +47,20 @@ const fetchProductsFromDatabase = async (
   return products;
 };
 
+const getBearerToken = async (): Promise<string> => {
+  const tokenApi = "http://20.244.56.144/test/auth";
+
+  const response: AxiosResponse = await axios.post(tokenApi, {
+    companyName: "HiveMart",
+    clientID: "205ade47-5df7-46d4-a232-fd186da774de",
+    clientSecret: "AJQrcgwaHrCJlrqx",
+    ownerName: "Animesh",
+    ownerEmail: "csai21033@glbitm.ac.in",
+    rollNo: "2101921520031",
+  });
+  return `Bearer ${response.data.access_token}`;
+};
+
 // req.body = {n, page, sortBy[price, rating, discount]}
 const topProductController = async (
   req: Request,
@@ -55,7 +69,7 @@ const topProductController = async (
   try {
     const { categoryName } = req.params;
     const { n, page, sortBy } = req.body as IProductQuery;
-    const bearerToken: string = req.headers.authorization || "";
+    const bearerToken: string = await getBearerToken();
 
     // external API URL
     const externalApiUrl: string = `http://20.244.56.144/test/companies/AMZ/categories/${categoryName}/products`;

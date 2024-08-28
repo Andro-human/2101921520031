@@ -34,7 +34,7 @@ const TopProduct = () => {
     // Handle form submission
     try {
       const response = await axios.get(
-        "https://localhost:3030/category/:categoryName/products",
+        "http://localhost:3030/category/:categoryName/products",
         {
           params: {
             categoryName: "AMZ",
